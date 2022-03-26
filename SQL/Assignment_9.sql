@@ -29,28 +29,30 @@ VALUES
 (9, "Pritam", "Patel", "Mechanical", 40000, "pritampatel@gmail.com", "2016-03-01"),
 (10, "Sayak", "Sharma", "Workshop", 20000, "sayaksharma@gmail.com", "2007-05-10");
 
-# CREATING TABLE worker_two
-CREATE TABLE worker_two LIKE worker;
-
-# INSERTING VALUES INTO THE worker_edu TABLE
-INSERT INTO worker_two(worker_id, first_name, last_name, department, salary,email,joining_date)
-VALUES
-(1, "Jobin", "Mathew", "Electrical", 70000, "jobinmathewsp@gmail.com", "2018-01-04"),
-(2, "Vipul", "Kumar", "Mechanical", 35000, "satishkumar@gmail.com", "2012-06-24"),
-(3, "Satish", "Choudhary", "Workshop", 25000, "satishchoudhary@gmail.com", "2010-03-14"),
-(4, "Amit", "Jana", "IT", 100000, "amitjana@gmail.com", "2004-12-22"),
-(5, "Manik", "Aggarwal", "IT", 60000, "manikaggarwal@gmail.com", "2006-07-04"),
-(6, "Priya", "Pal", "Civil", 120000, "priyapal@gmail.com", "2020-06-20");
-
-# Q15. Write an SQL query to fetch intersecting records of two tables.
-SELECT worker.worker_id, worker.first_name, worker.last_name, worker_two.department, worker_two.salary
-FROM worker
-INNER JOIN worker_two
-ON worker.worker_id=worker_two.worker_id;
-
-# Q16. Write an SQL query to show records from one table that another table does not have.
+# Q17. Write an SQL query to show the top n (say 10) records of a table.
+delimiter //
+CREATE PROCEDURE top_n(IN var INT)
+BEGIN
 SELECT * 
 FROM worker
-WHERE worker_id NOT IN(
-SELECT worker_two.worker_id
-FROM worker_two);
+ORDER BY worker_id ASC
+LIMIT var;
+END //
+delimiter ;
+
+CALL top_n(10);
+
+# Q18. Write an SQL query to determine the nth (say n=5) highest salary from a table.
+delimiter //
+CREATE PROCEDURE nth_salary(IN var INT)
+BEGIN
+(SELECT salary 
+FROM worker
+ORDER BY salary DESC
+LIMIT var)
+ORDER BY salary ASC
+LIMIT 1;
+END //
+delimiter ;
+
+call nth_salary(5)
