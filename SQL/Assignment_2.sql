@@ -30,7 +30,6 @@ VALUES
 (10, "Sayak", "Sharma", "Workshop", 20000, "sayaksharma@gmail.com", "2007-05-10");
 
 # Q1. Write an SQL query to print the first three characters of  FIRST_NAME from Worker table.
-
 SELECT SUBSTRING(first_name, 1,3) 
 from worker; 
 
